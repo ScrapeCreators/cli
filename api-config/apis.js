@@ -5070,7 +5070,7 @@ export const apis = [
         method: "GET",
         description: "Search Facebook Marketplace listings",
         fullDescription:
-          "Searches Facebook Marketplace listings by keyword and lat/lng. Pass category_id to restrict results to the numeric Facebook Marketplace category ID returned on listing results. Supports pagination with the returned cursor. Pass the cursor value back as-is. When sort_by is creation_time_descend, Facebook can still return slightly different ordering between identical requests. For alerting/new-item workflows, scrape multiple pages and dedupe by listing id instead of relying on page 1 item order being identical every run.",
+          "Searches Facebook Marketplace listings by keyword and lat/lng. Each listing includes creation_time as an ISO 8601 UTC timestamp when Facebook exposes an exact listing timestamp, plus listing_date_text when available; either field can be null. Pass category_id to restrict results to the numeric Facebook Marketplace category ID returned on listing results. Supports pagination with the returned cursor. Pass the cursor value back as-is. When sort_by is creation_time_descend, Facebook can still return slightly different ordering between identical requests. For alerting/new-item workflows, scrape multiple pages and dedupe by listing id instead of relying on page 1 item order being identical every run.",
         path: "/v1/facebook/marketplace/search",
         params: [
           {
@@ -5213,6 +5213,8 @@ export const apis = [
               "id": "1880804689276480",
               "url": "https://www.facebook.com/marketplace/item/1880804689276480/",
               "title": "ANCHEER E Bike",
+              "creation_time": null,
+              "listing_date_text": null,
               "price": {
                 "formatted_amount": "$300",
                 "amount_with_offset_in_currency": 30000,
@@ -5248,6 +5250,8 @@ export const apis = [
               "id": "950860437561765",
               "url": "https://www.facebook.com/marketplace/item/950860437561765/",
               "title": "Mountain Bike",
+              "creation_time": null,
+              "listing_date_text": null,
               "price": {
                 "formatted_amount": "$60",
                 "amount_with_offset_in_currency": 6000,
@@ -5280,6 +5284,8 @@ export const apis = [
               "id": "727510149974761",
               "url": "https://www.facebook.com/marketplace/item/727510149974761/",
               "title": "Like New Ozone 500 Boys’ Blaze 12-Inch Bike – Ridden Less Than 10 Times",
+              "creation_time": null,
+              "listing_date_text": null,
               "price": {
                 "formatted_amount": "$40",
                 "amount_with_offset_in_currency": 4000,
