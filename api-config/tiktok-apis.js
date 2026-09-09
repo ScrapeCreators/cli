@@ -5580,7 +5580,7 @@ export const tiktokBaseApis = {
       name: "Transcript",
       method: "GET",
       description: "Scrapes transcript from a TikTok video",
-      fullDescription: "Extracts the transcript, captions, or subtitles from a TikTok video by URL. Returns `id`, `url`, and `transcript` as a WEBVTT-formatted string with timestamped text segments. Video must be under 2 minutes; costs an additional 10 credits when `use_ai_as_fallback=true`.",
+      fullDescription: "Extracts existing transcripts, captions, or subtitles from a TikTok video by URL. Returns `id`, `url`, and `transcript` as a WEBVTT-formatted string with timestamped text segments. Existing transcripts work for videos of any length. Only the optional AI fallback is limited to videos up to 2 minutes and costs an additional 10 credits when `use_ai_as_fallback=true`.",
       path: "/v1/tiktok/video/transcript",
       params: [
         {
@@ -5604,7 +5604,7 @@ export const tiktokBaseApis = {
           type: "string",
           required: false,
           description:
-            "Set to 'true' to use AI as a fallback to get the transcript if the transcript is not found. Costs 10 credits to use this feature. And only if the video is under 2 minutes.",
+            "Set to 'true' to use AI when an existing transcript is not found. The AI fallback supports videos up to 2 minutes and costs 10 credits; existing transcripts have no length limit.",
           placeholder: "false",
           credits: 10,
         },
