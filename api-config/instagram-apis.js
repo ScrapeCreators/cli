@@ -6807,18 +6807,24 @@ export const instagramBaseApis = {
     {
       name: "Profile Post Count",
       method: "GET",
-      description: "Gets the total number of posts on an Instagram profile",
+      description: "Gets the post count shown on an Instagram profile",
       fullDescription:
-        "Returns the total post count shown on a public Instagram profile. Use this endpoint when Profile returns media_count as null or edge_owner_to_timeline_media.count contains only the current batch size. This endpoint makes a separate Instagram profile-page request so it does not add latency to the main Profile endpoint. Instagram does not expose this metadata for every profile; unavailable counts return an error without deducting a credit.",
+        "Returns the post count shown on a public Instagram profile. Use this endpoint when Profile returns media_count as null or edge_owner_to_timeline_media.count contains only the current batch size. This endpoint makes a separate Instagram profile-page request so it does not add latency to the main Profile endpoint. Full values such as 12,345 Posts return the exact integer with is_estimated set to false. For profiles with more than 10,000 posts, Instagram may expose only a compact value such as 12K Posts or 1.2M Posts. Set allow_estimated=true to return the scaled integer with is_estimated set to true. Estimated counts are opt-in: when allow_estimated is omitted or false, the endpoint returns an uncharged 422 response explaining that exact precision is unavailable. If Instagram omits the count entirely, the endpoint returns an error without deducting a credit.",
       path: "/v1/instagram/profile/post-count",
       responseFields: [
         {
-          path: "data.handle",
+          path: "handle",
           description: "Instagram handle",
         },
         {
-          path: "data.media_count",
-          description: "Total number of posts shown on the profile",
+          path: "media_count",
+          description:
+            "Exact post count when is_estimated is false; scaled compact count when true",
+        },
+        {
+          path: "is_estimated",
+          description:
+            "Whether media_count was scaled from an abbreviated Instagram value such as 12K or 1.2M",
         },
       ],
       params: [
@@ -6829,14 +6835,22 @@ export const instagramBaseApis = {
           placeholder: "lifestyleperfume",
           description: "Instagram handle",
         },
+        {
+          name: "allow_estimated",
+          type: "boolean",
+          required: false,
+          placeholder: false,
+          description:
+            "Set to true to return scaled estimates when Instagram abbreviates counts for profiles with more than 10,000 posts. Defaults to false; false or omitted returns an uncharged 422 when only an estimate is available.",
+        },
       ],
       sampleResponse: {
         success: true,
         credits_remaining: 100,
-        data: {
-          handle: "lifestyleperfume",
-          media_count: 2774,
-        },
+        credits_charged: 1,
+        handle: "lifestyleperfume",
+        media_count: 2774,
+        is_estimated: false,
       },
     },
     {
